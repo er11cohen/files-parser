@@ -8,9 +8,8 @@ namespace WikiDownloadBIH
         static void Main(string[] args)
         {
             string result;
-            string csvPath = @"D:\Eran\EranDoc\Android Develop\develop\BenIshHi\WikiDownloadBHI.csv";
-            string targetPath = @"D:\Eran\EranDoc\Android Develop\develop\BenIshHi\final\";
-            string wikiPrefix = "https://he.m.wikisource.org/wiki/";
+            string csvPath = @"C:\Users\eran_cohen\Documents\GitHub\files-parser\WikiDownloadBIH\assets\benIshHaiCSV.csv";
+            string targetPath = @"C:\Users\eran_cohen\Documents\GitHub\final\";
 
             string[] csvParse = ReadAndSplitCsvFile(csvPath);
 
@@ -22,7 +21,7 @@ namespace WikiDownloadBIH
                     if (csvParse[i] != "")
                     {
                         string[] parashaSplit = csvParse[i].Replace("\r", "").Split(',');
-                        string wikiPath = wikiPrefix + parashaSplit[5] + parashaSplit[2];
+                        string wikiPath = parashaSplit[6];
                         result = webClient.DownloadString(wikiPath);
                         result = BenIshHi.BenIshHi.ClearHtmlString(result);
                         File.WriteAllText(targetPath + parashaSplit[1] + "\\" + parashaSplit[4] + "\\" + parashaSplit[3] + ".html", result, Encoding.UTF8);

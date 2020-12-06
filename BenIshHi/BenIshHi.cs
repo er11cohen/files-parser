@@ -132,7 +132,10 @@ namespace BenIshHi
                 {
                     final = result.IndexOf("<div id='mw-mf-page-center'", start);
                 }
-                result = result.Remove(start, final - start);
+                if (final != -1)
+                {
+                    result = result.Remove(start, final - start);
+                }
             }
 
             start = result.IndexOf("<form action=\"/w/index.php\" class=\"search-box\">");
