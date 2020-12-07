@@ -41,8 +41,9 @@ namespace ReadFile
         {
             //string parentPath = @"D:\Eran\EranDoc\Android Develop\develop\HokLeisrael\html parashot";
             //string targetPath = @"D:\Eran\EranDoc\Android Develop\develop\HokLeisrael\finalParashotWifhHrefAndBold";
-            string parentPath = @"D:\Eran\EranDoc\Android Develop\input";
-            string targetPath = @"D:\Eran\EranDoc\Android Develop\output";
+            //string parentPath = @"C:\Users\eran_cohen\Documents\GitHub\misc\HL\input";
+            string parentPath = @"C:\Users\eran_cohen\Documents\GitHub\files-parser\ReadFile\assets\htmlParashot";
+            string targetPath = @"C:\Users\eran_cohen\Documents\GitHub\misc\HL\output";
 
             foreach (var pathDirectory in Directory.GetDirectories(parentPath))
             {
