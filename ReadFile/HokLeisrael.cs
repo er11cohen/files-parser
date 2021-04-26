@@ -64,7 +64,7 @@ namespace ReadFile
                         Directory.CreateDirectory(targetPath + "\\" + directoryName + "\\" + fileNameTarget);
 
                     string result;
-                    using (StreamReader reader = new StreamReader(pathFile, Encoding.Default))
+                    using (StreamReader reader = new StreamReader(pathFile, Encoding.GetEncoding("windows-1255")))
                     {
                         result = reader.ReadToEnd();
                     }
