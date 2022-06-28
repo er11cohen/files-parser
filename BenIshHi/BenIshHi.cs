@@ -11,8 +11,8 @@ namespace BenIshHi
     {
          static void Main(string[] args)
         {
-            //parseOneFile();
-            parseAllYear();
+            parseOneFile();
+            // parseAllYear();
         }
 
         private static void parseAllYear()
@@ -55,13 +55,13 @@ namespace BenIshHi
         public static void parseOneFile()
         {
 
-            string parash = "Breshit";
+            string parash = "intro";
             //string pathFile = @"C:\Users\Eran\Desktop\develop\BenIshHi\original\Year_2\Breshit\" + parash + ".html";
-            string pathFile = @"D:\Eran\EranDoc\Android Develop\output\" + parash + ".html";
+            string pathFile = @"C:\Users\eran_cohen\Documents\GitHub\final\original\" + parash + ".html";
             string result = ClearHtmlPath(pathFile);
 
             //File.WriteAllText(@"C:\Users\Eran\Desktop\develop\BenIshHi\" + parash + ".html", result, Encoding.UTF8);
-            File.WriteAllText(@"D:\Eran\EranDoc\Android Develop\output\" + parash + ".html", result, Encoding.UTF8);
+            File.WriteAllText(@"C:\Users\eran_cohen\Documents\GitHub\final\" + parash + ".html", result, Encoding.UTF8);
         }
 
         public static string ClearHtmlPath(string pathFile)
