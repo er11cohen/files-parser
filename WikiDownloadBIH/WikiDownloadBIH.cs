@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Net;
 using System.Text;
 
 namespace WikiDownloadBIH
@@ -22,6 +23,8 @@ namespace WikiDownloadBIH
                     {
                         string[] parashaSplit = csvParse[i].Replace("\r", "").Split(',');
                         string wikiPath = parashaSplit[6];
+                        ServicePointManager.Expect100Continue = true;
+                        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
                         result = webClient.DownloadString(wikiPath);
                         result = BenIshHi.BenIshHi.ClearHtmlString(result);
                         File.WriteAllText(targetPath + parashaSplit[1] + "\\" + parashaSplit[4] + "\\" + parashaSplit[3] + ".html", result, Encoding.UTF8);

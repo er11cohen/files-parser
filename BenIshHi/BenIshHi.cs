@@ -347,6 +347,13 @@ namespace BenIshHi
             {
                 final = result.IndexOf("/>", start) + 2;
                 result = result.Remove(start, final - start);
+            }      
+            
+            start = result.IndexOf("<ul id=\"p-views");
+            if (start != -1)
+            {
+                final = result.IndexOf("</ul>", start) + 5;
+                result = result.Remove(start, final - start);
             }
 
 
