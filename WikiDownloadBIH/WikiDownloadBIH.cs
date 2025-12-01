@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using BenIshHi;
+using System.IO;
 using System.Net;
 using System.Text;
 
@@ -25,7 +26,9 @@ namespace WikiDownloadBIH
                         string wikiPath = parashaSplit[6];
                         ServicePointManager.Expect100Continue = true;
                         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-                        result = webClient.DownloadString(wikiPath);
+
+						webClient.Headers.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36");
+						result = webClient.DownloadString(wikiPath);
                         result = BenIshHi.BenIshHi.ClearHtmlString(result);
                         File.WriteAllText(targetPath + parashaSplit[1] + "\\" + parashaSplit[4] + "\\" + parashaSplit[3] + ".html", result, Encoding.UTF8);
                     }

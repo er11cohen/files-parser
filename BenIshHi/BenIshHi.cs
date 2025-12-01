@@ -1,9 +1,12 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace BenIshHi
 {
@@ -176,18 +179,64 @@ namespace BenIshHi
                 result = result.Remove(start, final - start);
             }
 
-
-
-            start = result.IndexOf("<div id=\"mw-navigation\">");
+            start = result.IndexOf("<div class=\"vector-sticky-pinned-container\"");
             if (start != -1)
             {
-                final = result.IndexOf("</body>", start);
+                final = result.IndexOf("</div>", start);
+                result = result.Remove(start, final - start);
+            }
+
+            start = result.IndexOf("<a class=\"mw-jump-link\"");
+            if (start != -1)
+            {
+                final = result.IndexOf("</a>", start);
+                result = result.Remove(start, final - start);
+            }
+
+            start = result.IndexOf("<div class=\"mw-page-container\"");
+            if (start != -1)
+            {
+                final = result.IndexOf("</div>", start);
                 result = result.Remove(start, final - start);
             }
 
 
+			start = result.IndexOf("<ul class=\"vector-toc-contents\"");
+			if (start != -1)
+			{
+				final = result.IndexOf("</ul>", start);
+				result = result.Remove(start, final - start);
+			}
 
-            start = result.IndexOf("<div id=\"mw-mf-viewport\"");
+			while (result.IndexOf("<li id=\"toc", start) != -1)
+            {
+				start = result.IndexOf("<li id=\"toc");
+				if (start != -1)
+				{
+					final = result.IndexOf("</li>", start);
+					result = result.Remove(start, final - start);
+				}
+			}
+
+
+			start = result.IndexOf("<div id=\"vector-page-titlebar-toc\"");
+			if (start != -1)
+			{
+				final = result.IndexOf("</nav>", start) - 6;
+				result = result.Remove(start, final - start);
+			}
+
+
+			start = result.IndexOf("<div id=\"p-lang-btn\"");
+			if (start != -1)
+			{
+				final = result.IndexOf("</header>", start) - 8;
+				result = result.Remove(start, final - start);
+			}
+
+
+
+			start = result.IndexOf("<div id=\"mw-mf-viewport\"");
             if (start != -1)
             {
                 final = result.IndexOf("<div id=\"content\"", start);
@@ -364,10 +413,80 @@ namespace BenIshHi
             result = result.Replace(".D7.94.D7.9C.D7.9B.D7.95.D7.AA", "halach");
             result = result.Replace(".D7.90.D7.95.D7.AA_", ""); //אות
 
-            // result = result.Replace(".D7.90", "1").Replace(".D7.91", "2").Replace(".D7.92", "3").Replace(".D7.93", "4").Replace(".D7.94", "5").Replace(".D7.95", "6")
-            //  .Replace(".D7.96", "7").Replace(".D7.97", "8").Replace(".D7.98", "9").Replace(".D7.99", "10");
+			// result = result.Replace(".D7.90", "1").Replace(".D7.91", "2").Replace(".D7.92", "3").Replace(".D7.93", "4").Replace(".D7.94", "5").Replace(".D7.95", "6")
+			//  .Replace(".D7.96", "7").Replace(".D7.97", "8").Replace(".D7.98", "9").Replace(".D7.99", "10");
 
-            return result;
+
+
+			var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(result);
+
+
+			var nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='vector-menu-content-list']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='vector-page-toolbar vector-feature-custom-font-size-clientpref--excluded']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='vector-column-end no-font-mode-scale']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='vector-body-before-content']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='mw-editsection']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@class='vector-header-container vector-sticky-header-container no-font-mode-scale']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			 nodesToRemove = htmlDoc.DocumentNode.SelectNodes("//*[@id='catlinks']");
+			if (nodesToRemove != null)
+			{
+				foreach (var node in nodesToRemove)
+				{
+					node.Remove();
+				}
+			}
+
+			result = htmlDoc.DocumentNode.OuterHtml;
+
+			return result;
         }
     }
 }
